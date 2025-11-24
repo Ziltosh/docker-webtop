@@ -59,10 +59,11 @@ COPY /root /
 
 RUN \
   apt-get install --no-install-recommends -y \
-    curl \
+    python3 \
+    python3-pip \
+    python3-venv \
     wget \
-    gnupg2 \
-    software-properties-common && \
+    gnupg2 && \
   /bin/sh mt5.sh
 
 # ports and volumes
