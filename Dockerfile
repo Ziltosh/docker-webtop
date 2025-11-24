@@ -53,7 +53,7 @@ RUN \
 # add local files
 COPY /root /
 
-RUN ./mt5.sh
+RUN /bin/sh mt5.sh
 
 # ports and volumes
 EXPOSE 3000
