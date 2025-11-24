@@ -20,8 +20,6 @@ RUN \
   DEBIAN_FRONTEND=noninteractive \
   apt-get install --no-install-recommends -y \
     curl \
-    wget \
-    curl \
     gnupg2 \
     software-properties-common \
     ca-certificates \
@@ -59,7 +57,13 @@ RUN \
 # add local files
 COPY /root /
 
-RUN /bin/sh mt5.sh
+RUN \
+  apt-get install --no-install-recommends -y \
+    curl \
+    wget \
+    gnupg2 \
+    software-properties-common && \
+  /bin/sh mt5.sh
 
 # ports and volumes
 EXPOSE 3000
