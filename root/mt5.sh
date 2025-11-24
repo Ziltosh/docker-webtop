@@ -25,20 +25,20 @@ check_dependency() {
 }
 
 # Function to check if a Python package is installed
-is_python_package_installed() {
-    python3 -c "import pkg_resources; exit(not pkg_resources.require('$1'))" 2>/dev/null
-    return $?
-}
+#is_python_package_installed() {
+#    python3 -c "import pkg_resources; exit(not pkg_resources.require('$1'))" 2>/dev/null
+#    return $?
+#}
 
 # Function to check if a Python package is installed in Wine
-is_wine_python_package_installed() {
-    $wine_executable python -c "import pkg_resources; exit(not pkg_resources.require('$1'))" 2>/dev/null
-    return $?
-}
+#is_wine_python_package_installed() {
+#    $wine_executable python -c "import pkg_resources; exit(not pkg_resources.require('$1'))" 2>/dev/null
+#    return $?
+#}
 
 # Check for necessary dependencies
-check_dependency "curl"
-check_dependency "$wine_executable"
+#check_dependency "curl"
+#check_dependency "$wine_executable"
 
 # Install Mono if not present
 if [ ! -e "/config/.wine/drive_c/windows/mono" ]; then
@@ -77,48 +77,48 @@ fi
 
 
 # Install Python in Wine if not present
-if ! $wine_executable python --version 2>/dev/null; then
-    show_message "[5/7] Installing Python in Wine..."
-    curl -L $python_url -o /tmp/python-installer.exe
-    $wine_executable /tmp/python-installer.exe /quiet InstallAllUsers=1 PrependPath=1
-    rm /tmp/python-installer.exe
-    show_message "[5/7] Python installed in Wine."
-else
-    show_message "[5/7] Python is already installed in Wine."
-fi
+#if ! $wine_executable python --version 2>/dev/null; then
+#    show_message "[5/7] Installing Python in Wine..."
+#    curl -L $python_url -o /tmp/python-installer.exe
+#    $wine_executable /tmp/python-installer.exe /quiet InstallAllUsers=1 PrependPath=1
+#    rm /tmp/python-installer.exe
+#    show_message "[5/7] Python installed in Wine."
+#else
+#    show_message "[5/7] Python is already installed in Wine."
+#fi
 
 # Upgrade pip and install required packages
-show_message "[6/7] Installing Python libraries"
-$wine_executable python -m pip install --upgrade --no-cache-dir pip
+#show_message "[6/7] Installing Python libraries"
+#$wine_executable python -m pip install --upgrade --no-cache-dir pip
 # Install MetaTrader5 library in Windows if not installed
-show_message "[6/7] Installing MetaTrader5 library in Windows"
-if ! is_wine_python_package_installed "MetaTrader5==$metatrader_version"; then
-    $wine_executable python -m pip install --no-cache-dir MetaTrader5==$metatrader_version
-fi
+#show_message "[6/7] Installing MetaTrader5 library in Windows"
+#if ! is_wine_python_package_installed "MetaTrader5==$metatrader_version"; then
+#    $wine_executable python -m pip install --no-cache-dir MetaTrader5==$metatrader_version
+#fi
 # Install mt5linux library in Windows if not installed
 show_message "[6/7] Checking and installing mt5linux library in Windows if necessary"
-if ! is_wine_python_package_installed "mt5linux"; then
-    $wine_executable python -m pip install --no-cache-dir "mt5linux>=0.1.9"
-fi
+#if ! is_wine_python_package_installed "mt5linux"; then
+#    $wine_executable python -m pip install --no-cache-dir "mt5linux>=0.1.9"
+#fi
 
 # Install python-dateutil if needed (datetime is built-in, but dateutil adds features)
-if ! is_wine_python_package_installed "python-dateutil"; then
-    show_message "[6/7] Installing python-dateutil library in Windows"
-    $wine_executable python -m pip install --no-cache-dir python-dateutil
-fi
+#if ! is_wine_python_package_installed "python-dateutil"; then
+#    show_message "[6/7] Installing python-dateutil library in Windows"
+#    $wine_executable python -m pip install --no-cache-dir python-dateutil
+#fi
 
 # Install mt5linux library in Linux if not installed
 show_message "[6/7] Checking and installing mt5linux library in Linux if necessary"
-if ! is_python_package_installed "mt5linux"; then
-    pip install --break-system-packages --no-cache-dir --no-deps mt5linux && \
-    pip install --break-system-packages --no-cache-dir rpyc plumbum numpy
-fi
+#if ! is_python_package_installed "mt5linux"; then
+#    pip install --break-system-packages --no-cache-dir --no-deps mt5linux && \
+#    pip install --break-system-packages --no-cache-dir rpyc plumbum numpy
+#fi
 
 # Install pyxdg library in Linux if not installed
 show_message "[6/7] Checking and installing pyxdg library in Linux if necessary"
-if ! is_python_package_installed "pyxdg"; then
-    pip install --break-system-packages --no-cache-dir pyxdg
-fi
+#if ! is_python_package_installed "pyxdg"; then
+#    pip install --break-system-packages --no-cache-dir pyxdg
+#fi
 
 # Start the MT5 server on Linux
 show_message "[7/7] Starting the mt5linux server..."
