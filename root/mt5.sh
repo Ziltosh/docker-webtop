@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Configuration variables
 mt5file='/config/.wine/drive_c/Program Files/MetaTrader 5/terminal64.exe'
