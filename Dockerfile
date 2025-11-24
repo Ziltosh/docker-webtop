@@ -24,6 +24,7 @@ RUN \
     xfce4-terminal \
     xfce4 \
     xubuntu-default-settings \
+    wget \
     xubuntu-icon-theme && \
   echo "**** xfce tweaks ****" && \
   sed -i \
@@ -40,6 +41,9 @@ RUN \
     /usr/bin/chromium-browser && \
   rm -f \
     /etc/xdg/autostart/xscreensaver.desktop && \
+  wget https://download.mql5.com/cdn/web/metaquotes.software.corp/mt5/mt5linux.sh && \
+  chmod +x mt5linux.sh && \
+  ./mt5linux.sh && \
   echo "**** cleanup ****" && \
   apt-get autoclean && \
   rm -rf \
