@@ -59,9 +59,14 @@ COPY /root /
 
 RUN \
   apt-get install --no-install-recommends -y \
-    wget \
-    gnupg2 && \
-  /bin/sh mt5.sh
+    ca-certificates \
+  && mkdir -pm755 /etc/apt/keyrings \
+  && wget -O /etc/apt/keyrings/winehq-archive.key https://dl.winehq.org/wine-builds/winehq.key \
+  && wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/debian/dists/bookworm/winehq-bookworm.sources \
+  && dpkg --add-architecture i386 \
+  && apt-get update \
+  && apt-get install --install-recommends -y winehq-stable \
+  && /bin/sh mt5.sh
 
 # ports and volumes
 EXPOSE 3000
