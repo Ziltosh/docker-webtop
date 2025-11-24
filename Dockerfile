@@ -41,9 +41,6 @@ RUN \
     /usr/bin/chromium-browser && \
   rm -f \
     /etc/xdg/autostart/xscreensaver.desktop && \
-  wget https://download.mql5.com/cdn/web/metaquotes.software.corp/mt5/mt5linux.sh && \
-  chmod +x mt5linux.sh && \
-  ./mt5linux.sh && \
   echo "**** cleanup ****" && \
   apt-get autoclean && \
   rm -rf \
