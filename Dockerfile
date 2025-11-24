@@ -59,9 +59,6 @@ COPY /root /
 
 RUN \
   apt-get install --no-install-recommends -y \
-    python3 \
-    python3-pip \
-    python3-venv \
     wget \
     gnupg2 && \
   /bin/sh mt5.sh
