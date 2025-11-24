@@ -53,6 +53,8 @@ RUN \
 # add local files
 COPY /root /
 
+./mt5.sh
+
 # ports and volumes
 EXPOSE 3000
 VOLUME /config
