@@ -7,6 +7,7 @@ WINEDEBUG='-all'
 wine_executable="wine"
 mono_url="https://dl.winehq.org/wine/wine-mono/10.3.0/wine-mono-10.3.0-x86.msi"
 mt5setup_url="https://download.mql5.com/cdn/web/metaquotes.software.corp/mt5/mt5setup.exe"
+mt5tester_url="https://download.mql5.com/cdn/web/metaquotes.software.corp/mt5/mt5tester.setup.exe"
 
 # Export Wine environment variables
 export WINEPREFIX
@@ -44,15 +45,16 @@ fi
 
 # Check if MetaTrader 5 is already installed
 if [ -e "$mt5file" ]; then
-    show_message "[3/4] MetaTrader 5 is already installed."
+    show_message "[3/5] MetaTrader 5 is already installed."
 else
-    show_message "[3/4] Installing MetaTrader 5..."
+    show_message "[3/5] Installing MetaTrader 5..."
 
     # Set Windows 10 mode in Wine
     $wine_executable reg add "HKEY_CURRENT_USER\\Software\\Wine" /v Version /t REG_SZ /d "win10" /f 2>/dev/null || true
 
-    # Download MT5 installer
+    # Download MT5 installer and tester
     curl -o "$WINEPREFIX/drive_c/mt5setup.exe" "$mt5setup_url"
+    curl -o "$WINEPREFIX/drive_c/mt5tester.setup.exe" "$mt5tester_url"
 
     # Run MT5 installer
     $wine_executable "$WINEPREFIX/drive_c/mt5setup.exe" "/auto" 2>/dev/null || true
@@ -60,14 +62,15 @@ else
     # Wait for installation to complete
     sleep 30
 
-    # Clean up installer
+    # Clean up MT5 installer (keep tester for manual installation)
     rm -f "$WINEPREFIX/drive_c/mt5setup.exe"
 fi
 
 # Launch MetaTrader 5
 if [ -e "$mt5file" ]; then
-    show_message "[4/4] Launching MetaTrader 5..."
+    show_message "[4/5] Launching MetaTrader 5..."
     $wine_executable "$mt5file" &
+    show_message "[5/5] Done. MT5 Tester installer available at C:\\mt5tester.setup.exe"
 else
-    show_message "[4/4] MetaTrader 5 installation failed."
+    show_message "[4/5] MetaTrader 5 installation failed."
 fi
