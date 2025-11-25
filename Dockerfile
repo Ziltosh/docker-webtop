@@ -54,7 +54,7 @@ RUN \
     /var/tmp/* \
     /tmp/*
 
-COPY /root/mt5.sh
+COPY /root/mt5.sh mt5.sh
 RUN chmod +x mt5.sh
 
 ENV TITLE=Metatrader5
