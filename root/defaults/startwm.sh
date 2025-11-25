@@ -13,5 +13,10 @@ if [ ! -d "${HOME}"/.config/xfce4/xfconf/xfce-perchannel-xml ]; then
   cp /defaults/xfce/* "${HOME}"/.config/xfce4/xfconf/xfce-perchannel-xml/
 fi
 
+# Install and run MetaTrader 5 on first boot (requires X11 display)
+if [ -f /mt5.sh ]; then
+  /mt5.sh &
+fi
+
 # Start DE
 exec dbus-launch --exit-with-session /usr/bin/xfce4-session > /dev/null 2>&1

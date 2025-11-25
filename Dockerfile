@@ -54,26 +54,31 @@ RUN \
     /var/tmp/* \
     /tmp/*
 
-COPY /root/mt5.sh mt5.sh
-RUN chmod +x mt5.sh
-
 ENV TITLE=Metatrader5
 ENV WINEPREFIX="/config/.wine"
 ENV WINEDEBUG=-all
 
 RUN \
+  apt-get update && \
   apt-get install --no-install-recommends -y \
     ca-certificates \
+    python3-pip \
   && mkdir -pm755 /etc/apt/keyrings \
   && wget -O /etc/apt/keyrings/winehq-archive.key https://dl.winehq.org/wine-builds/winehq.key \
   && wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/debian/dists/bookworm/winehq-bookworm.sources \
   && dpkg --add-architecture i386 \
   && apt-get update \
   && apt-get install --install-recommends -y winehq-stable \
-  && ./mt5.sh
+  && pip install --break-system-packages --no-cache-dir mt5linux rpyc plumbum numpy \
+  && echo "**** cleanup ****" \
+  && apt-get autoclean \
+  && rm -rf /var/lib/apt/lists/* /var/tmp/* /tmp/*
 
 # add local files
 COPY /root /
+
+# Make scripts executable
+RUN chmod +x /mt5.sh /defaults/startwm.sh
 
 # ports and volumes
 EXPOSE 3000
