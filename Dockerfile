@@ -54,6 +54,13 @@ RUN \
     /var/tmp/* \
     /tmp/*
 
+COPY /root/mt5.sh
+RUN chmod +x mt5.sh
+
+ENV TITLE=Metatrader5
+ENV WINEPREFIX="/config/.wine"
+ENV WINEDEBUG=-all
+
 RUN \
   apt-get install --no-install-recommends -y \
     ca-certificates \
@@ -63,7 +70,7 @@ RUN \
   && dpkg --add-architecture i386 \
   && apt-get update \
   && apt-get install --install-recommends -y winehq-stable \
-  && /bin/sh mt5.sh
+  && ./mt5.sh
 
 # add local files
 COPY /root /
