@@ -62,14 +62,12 @@ RUN \
   apt-get update && \
   apt-get install --no-install-recommends -y \
     ca-certificates \
-    python3-pip \
   && mkdir -pm755 /etc/apt/keyrings \
   && wget -O /etc/apt/keyrings/winehq-archive.key https://dl.winehq.org/wine-builds/winehq.key \
   && wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/debian/dists/bookworm/winehq-bookworm.sources \
   && dpkg --add-architecture i386 \
   && apt-get update \
   && apt-get install --install-recommends -y winehq-stable \
-  && pip install --break-system-packages --no-cache-dir mt5linux rpyc plumbum numpy \
   && echo "**** cleanup ****" \
   && apt-get autoclean \
   && rm -rf /var/lib/apt/lists/* /var/tmp/* /tmp/*
