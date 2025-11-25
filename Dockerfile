@@ -54,9 +54,6 @@ RUN \
     /var/tmp/* \
     /tmp/*
 
-# add local files
-COPY /root /
-
 RUN \
   apt-get install --no-install-recommends -y \
     ca-certificates \
@@ -67,6 +64,9 @@ RUN \
   && apt-get update \
   && apt-get install --install-recommends -y winehq-stable \
   && /bin/sh mt5.sh
+
+# add local files
+COPY /root /
 
 # ports and volumes
 EXPOSE 3000
