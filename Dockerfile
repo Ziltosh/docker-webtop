@@ -80,4 +80,5 @@ RUN chmod +x /mt5.sh /defaults/startwm.sh
 
 # ports and volumes
 EXPOSE 3000
+EXPOSE 2000-2011
 VOLUME /config

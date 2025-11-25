@@ -62,15 +62,22 @@ else
     # Wait for installation to complete
     sleep 30
 
-    # Clean up MT5 installer (keep tester for manual installation)
+    # Run MT5 Tester installer
+    show_message "[4/5] Installing MT5 Tester..."
+    $wine_executable "$WINEPREFIX/drive_c/mt5tester.setup.exe" "/auto" 2>/dev/null || true
+
+    # Wait for tester installation to complete
+    sleep 30
+
+    # Clean up installers
     rm -f "$WINEPREFIX/drive_c/mt5setup.exe"
+    rm -f "$WINEPREFIX/drive_c/mt5tester.setup.exe"
 fi
 
 # Launch MetaTrader 5
 if [ -e "$mt5file" ]; then
-    show_message "[4/5] Launching MetaTrader 5..."
+    show_message "[5/5] Launching MetaTrader 5..."
     $wine_executable "$mt5file" &
-    show_message "[5/5] Done. MT5 Tester installer available at C:\\mt5tester.setup.exe"
 else
-    show_message "[4/5] MetaTrader 5 installation failed."
+    show_message "[5/5] MetaTrader 5 installation failed."
 fi
